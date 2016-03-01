@@ -79,11 +79,14 @@ class ArcGISOnline extends AbstractHttpProvider implements Provider
             $data = $location->feature->attributes;
 
             $coordinates  = (array) $location->feature->geometry;
-            $streetName   = !empty($data->Match_addr) ? $data->Match_addr : null;
+            $streetName   = !empty($data->StName) ? $data->StName : null;
+            $streetType   = !empty($data->StType) ? $data->StType : null;
             $streetNumber = !empty($data->AddNum) ? $data->AddNum : null;
             $city         = !empty($data->City) ? $data->City : null;
             $zipcode      = !empty($data->Postal) ? $data->Postal : null;
             $countryCode  = !empty($data->Country) ? $data->Country : null;
+            $region       = !empty($data->Region) ? $data->Region : null;
+            $value        = !empty($location->name) ? $location->name : null;
 
             $adminLevels = [];
             foreach (['Region', 'Subregion'] as $i => $property) {
@@ -97,10 +100,13 @@ class ArcGISOnline extends AbstractHttpProvider implements Provider
                 'longitude'    => $coordinates['x'],
                 'streetNumber' => $streetNumber,
                 'streetName'   => $streetName,
+                'streetType'   => $streetType,
                 'locality'     => $city,
                 'postalCode'   => $zipcode,
                 'adminLevels'  => $adminLevels,
                 'countryCode'  => $countryCode,
+                'region'       => $region,
+                'value'        => $value,
             ]);
         }
 
